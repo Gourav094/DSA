@@ -1,0 +1,24 @@
+vector<vector<int>> Level(BinaryNode* root){
+    vector<vector<int>>ans;
+    if(root==NULL)
+        return ans;
+    queue<BinaryNode* >q;
+    q.push(root);
+    while(!q.empty()){
+        vector<int>level;
+        int size=q.size();
+        for(int i=;i<size;i++){
+            BinaryNode* front=q.front();
+            q.pop();
+            if(front->left !=NULL){
+                q.push(front->left);
+            }
+            if(front->right !=NULL){
+                q.push(front->right);
+            }
+            level.push(front);
+        }
+        ans.push(level);
+    }
+    return ans;
+}
