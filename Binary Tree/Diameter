@@ -1,0 +1,41 @@
+//method-1 ------T.C-->O(N^2)
+int LeftHeight(BinaryNode* root){
+    if(root==NULL){
+        return 0;
+    }
+    return 1+LeftHeight(root->left);
+}
+int RightHeight(BinaryNode* root){
+    if(root==NULL){
+        return 0;
+    }
+    return 1+LeftHeight(root->right);
+}
+int Diameter(BinaryNode* root){
+    if(root==NULL){
+        return 0;
+    }
+    int leftH=LeftHeight(root->left);
+    int rightH=RightHeight(root->right);
+    maxi=max(maxi,leftH+rightH);
+    Diameter(root->left);
+    Diameter(root->right);
+    return maxi;
+}
+//method-2    ------T.C-->O(N)
+int height(BinaryNode* root,int& Diameter){
+    if(root==NULL){
+        return;
+    }
+    int LH=height(root->left,Diameter);
+    int RH=height(root->right,Diameter);
+    Diameter=max(Diameter,LH+RH)
+    return 1+max(LH,RH);
+}
+
+int DiameterBT(BinaryNode* root){
+    int Diameter=0;
+    height(root,Diameter);
+    return Diameter;
+}
+
