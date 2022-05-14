@@ -1,0 +1,24 @@
+//using two stack
+vector<int> Post_iterative(BinaryNode* root){
+    vector<int> ans;
+    if(root==NULL) return ans;
+    stack<BinaryNode*>s1,s2;
+    s1.push(root);
+    while(!s1.empty()){
+        root=s1.top();
+        s1.pop();
+        s2.push(root);
+        if(root->left){
+            s1.push(root->left);
+        }
+        if(root->right){
+            s1.push(root->right);
+        }
+
+    }
+    while(!s2.empty()){
+        ans.push_back(s2.top()->data);
+        s2.pop();
+    }
+    return ans;
+}
