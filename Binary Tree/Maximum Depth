@@ -1,0 +1,9 @@
+int Depth(BinaryNode* root){
+    if(root==NULL){
+        return 0;
+    }
+    int leftH=Depth(root->left);
+    int rightH=Depth(root->right);
+    
+    return 1+max(leftH,rightH);;
+}
