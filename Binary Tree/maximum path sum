@@ -1,0 +1,15 @@
+int maxpathsum(BinaryNode* root,int& maxi){
+    if(root==NULL)
+        return 0;
+    int leftsum=max(0,maxpathsum(root->left,maxi));
+    int rightsum=max(0,maxpathsum(root->right,maxi));
+    maxi=max(maxi,root->data+leftsum+rightsum);
+    return root->data+max(leftsum,rightsum);
+}
+
+int pathSum(BinaryNode* root){
+    int maxi=INT_MIN;
+    maxpathsum(root,maxi);
+    return maxi;
+}
+//maxi will return the maxximum path sum
