@@ -1,0 +1,36 @@
+void ZigZag(BinaryNode* root){
+    if(root==NULL){
+        return;
+    }
+    stack<int> s;
+    queue<BinaryNode*> q;
+    q.push(root);
+    bool reverse=false;
+    while(!q.empty()){
+        int size=q.size();
+        for(int i=0;i<size;i++){
+            BinaryNode* front=q.front();
+            q.pop();
+            if(reverse){
+                s.push(front->data);
+            }
+            else{
+                cout<<front->data<<" ";
+            }
+            if(front->left){
+                q.push(front->left);
+            }
+            if(front->right){
+                q.push(front->right);
+            }
+        }
+        if(reverse){
+            while(!s.empty()){
+                cout<<s.top()<<" ";
+                s.pop();
+            }
+        }
+        reverse=!reverse;
+        cout<<endl;
+    }
+}
