@@ -34,3 +34,37 @@ void ZigZag(BinaryNode* root){
         cout<<endl;
     }
 }
+
+
+
+
+//another way
+vector<vector<int>> ZigZag(BinaryNode* root){
+    vector<vector<int>> ans;
+    if(root==NULL){
+        return ans;
+    }
+    queue<BinaryNode*>q;
+    bool leftToright = true;
+    q.push(root);
+    while(!q.empty()){
+        int size=q.size();
+        vector<int> v(size);
+        for(int i=0;i<size;i++){
+            BinaryNode* front=q.front();
+            q.pop();
+            int index=(leftToright)? i:(size-1-i);
+            v[index]=front->data;
+            if(front->left){
+                q.push(front->left);
+            }
+            if(front->right){
+                q.push(front->right);
+            }
+        }
+        leftToright=!leftToright;
+        ans.push_back(v);
+    }
+    
+    return ans;
+}
