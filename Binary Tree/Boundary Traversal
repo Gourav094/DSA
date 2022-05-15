@@ -1,0 +1,57 @@
+bool isLeaf(BinaryNode* root){
+    return !root->left && !root->right;
+}
+
+void leftadd(BinaryNode* root,vector<int> &ans){
+    BinaryNode* cur=root->left;
+    while(cur){
+        if(!isLeaf(cur))
+            ans.push_back(cur->data);
+        if(cur->left)
+            cur=cur->left;
+        else    
+            cur=cur->right;
+    }
+    cout<<endl<<"vector "<<ans.size()<<endl;
+}
+
+void rightadd(BinaryNode* root,vector<int> &ans){
+    BinaryNode* cur=root->right;
+    vector<int> temp;
+    while(cur){
+        if(!isLeaf(cur)){
+            temp.push_back(cur->data);
+
+        }
+        if(cur->right)
+            cur=cur->right;
+        else    
+            cur=cur->left;
+    }
+    for(int i=temp.size()-1;i>=0;i--){
+        ans.push_back(temp[i]);
+    }
+}
+
+void leafadd(BinaryNode* root,vector<int> &ans){
+    if(isLeaf(root)){
+        ans.push_back(root->data);
+        return;
+    }
+    if(root->left) leafadd(root->left,ans);
+    if(root->right) leafadd(root->right,ans);
+}
+
+vector<int> Boundary(BinaryNode* root){
+    vector<int> ans;
+    if(!root){
+        return ans;
+    }
+    if(!isLeaf(root)){
+        ans.push_back(root->data);
+    }
+    leftadd(root,ans);
+    leafadd(root,ans);
+    rightadd(root,ans);
+    return ans;
+}
