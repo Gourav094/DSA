@@ -1,0 +1,50 @@
+//Left View of BianryTree
+void Helper(BinaryNode* root,vector<int>& ans,int level){
+    if(root==NULL){
+        return;
+    }
+    if(level == ans.size()){
+        ans.push_back(root->data);
+    }
+    Helper(root->right,ans,level+1);
+    Helper(root->left,ans,level+1);
+
+}
+vector<int> Left(BinaryNode* root){
+    vector<int> ans;
+    Helper(root,ans,0);
+    return ans;
+}
+
+//Right view of Binary Tree
+void Helper(BinaryNode* root,vector<int>& ans,int level){
+    if(root==NULL){
+        return;
+    }
+    if(level == ans.size()){
+        ans.push_back(root->data);
+    }
+    Helper(root->left,ans,level+1);
+    Helper(root->right,ans,level+1);
+
+}
+vector<int> Right(BinaryNode* root){
+    vector<int> ans;
+    Helper(root,ans,0);
+    return ans;
+}
+//main fuction
+int main()
+{
+    BinaryNode* root=takeInput();
+    LevelOrder(root);
+    cout<<endl;
+    vector<int>v=Left(root);
+    
+    for(auto it:v){
+        cout<<it<<" ";
+    }
+    delete root;
+    return 0;
+}
+
