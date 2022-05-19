@@ -1,0 +1,28 @@
+vector<int> Top(BinaryNode* root){
+    queue<pair<BinaryNode* ,int>>q;
+    q.push({root,0});
+    vector<int>ans;
+    if(root==NULL){
+        return ans;
+    }
+    map<int,int>m;
+    while(!q.empty()){
+        auto it=q.front();
+        q.pop();
+        BinaryNode* node=it.first;
+        int x=it.second;
+        if(m.find(x)==m.end()){
+            m[x]=node->data;
+        }
+        if(node->left){
+            q.push({node->left,x-1});
+        }
+        if(node->right){
+            q.push({node->right,x+1});
+        }
+    }
+    for(auto i:m){
+        ans.push_back(i.second);
+    }
+    return ans;
+}
