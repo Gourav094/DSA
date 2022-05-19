@@ -1,0 +1,12 @@
+bool symm(BinaryNode* left,BinaryNode* right){
+    if(left==NULL || right==NULL){
+        return left==right;
+    }
+    if(left->data != right->data){
+        return false;
+    }
+    return symm(left->left,right->right) && symm(left->right,right->left);
+}
+bool Symmetrical(BinaryNode* root){
+    return symm(root->left,root->right);
+}
