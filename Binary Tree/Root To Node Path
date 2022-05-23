@@ -1,0 +1,26 @@
+bool getPath(BinaryNode* root,vector<int>& ans,int x){
+    if(!root){
+        return false;
+    }
+    ans.push_back(root->data);
+    if(root->data == x){
+        return true;
+    }
+    if(getPath(root->left,ans,x) || getPath(root->right,ans,x)){
+        return true;
+    }
+    ans.pop_back();
+    return false;
+}
+
+
+
+
+vector<int> Path(BinaryNode* root,int x){
+    vector<int> ans;
+    if(!root){
+        return ans;
+    }
+    getPath(root,ans,x);
+    return ans;
+}
