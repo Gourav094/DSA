@@ -1,0 +1,113 @@
+    #include <bits/stdc++.h>
+    using namespace std;
+    class BinaryNode{
+        public:
+        int data;
+        BinaryNode* left;
+        BinaryNode* right;
+        BinaryNode(int data){
+            this->data=data;
+            left=NULL;
+            right=NULL;
+
+        }
+        ~BinaryNode(){
+            delete left;
+            delete right;
+        }
+    };
+    BinaryNode* takeInput(){
+        int rootData;
+        // cout<<"Enter root data: ";
+        cin>>rootData;
+        if(rootData== -1){
+            return NULL;
+        }
+        BinaryNode* root=new BinaryNode(rootData);
+        queue<BinaryNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            BinaryNode* front=q.front();
+            q.pop();
+            int Leftchild;
+            cin>>Leftchild;
+            if(Leftchild != -1){
+                BinaryNode* child=new BinaryNode(Leftchild);
+                front->left=child;
+                q.push(child);
+            }
+            int rightchild;
+            cin>>rightchild;
+            if(rightchild != -1){
+                BinaryNode* child=new BinaryNode(rightchild);
+                front->right=child;
+                q.push(child);
+            }
+        }
+        return root;
+    }
+
+    void LevelOrder(BinaryNode* root){
+        if(root==NULL){
+            return;
+
+        }
+        queue<BinaryNode* > q;
+        q.push(root);
+        q.push(NULL);
+        while(!q.empty()){
+            BinaryNode* current=q.front();
+            q.pop();
+            if(current==NULL){
+                if(q.size()==0){
+                    break;
+                }
+                cout<<endl;
+                q.push(NULL);
+            }
+            else{
+                cout<<current->data<<" ";
+                if(current->left != NULL){
+                    q.push(current->left);
+                }
+                if(current->right != NULL){
+                    q.push(current->right);
+                }
+            }
+        }
+    }
+
+
+    BinaryNode* Lca(BinaryNode* root,int a,int b){
+        if(root==NULL || root->data == a || root->data == b){
+            return root;
+        }
+        BinaryNode* left=Lca(root->left,a,b);
+        BinaryNode* right=Lca(root->right,a,b);
+        if(left == NULL){
+            return right;
+        }
+        else if(right == NULL){
+            return left;
+        }
+        else{
+            return root;
+        }
+    }
+
+
+
+
+    int main()
+    {
+        BinaryNode* root=takeInput();
+        int a,b;
+        cin>>a>>b;
+        BinaryNode* ans=Lca(root,a,b);
+        cout<<ans->data;
+       
+
+        
+        delete root;
+        return 0;
+    }
