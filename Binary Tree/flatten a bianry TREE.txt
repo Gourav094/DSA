@@ -1,0 +1,60 @@
+//flatten a bianry TREE
+//iterative soltion::-
+void flatten(Node *root)
+    {
+        //code here
+        Node* cur=root;
+        Node*prev= NULL;
+        while(cur != NULL){
+            if(cur->left != NULL){
+                prev=cur->left;
+                while(prev->right){
+                    prev=prev->right;
+                }
+                prev->right=cur->right;
+                cur->right=cur->left;
+                cur->left=NULL;
+            }
+            cur=cur->right;
+        }
+    }
+
+//recursive solution:-
+Node* prev=NULL;
+    void flatten(Node *root)
+    {
+        //code here
+        if(root==NULL){
+            return;
+        }
+        flatten(root->right);
+        flatten(root->left);
+        root->right=prev;
+        root->left=NULL;
+        prev=root;
+    }
+
+//solution using stack:-
+void flatten(Node *root)
+    {
+        //code here
+        stack<Node*> s;
+        s.push(root);
+        while(!s.empty()){
+            Node* cur=s.top();
+            s.pop();
+            if(cur->right){
+                s.push(cur->right);
+            }
+            if(cur->left){
+                s.push(cur->left);
+            }
+            if(!s.empty()){
+                cur->right=s.top();
+            }
+            cur->left=NULL;
+        }
+    }
+
+
+
