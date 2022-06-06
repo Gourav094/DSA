@@ -1,0 +1,21 @@
+//construct tree from pre and in
+BinaryNode* Build(vector<int>& pre,vector<int>& in){
+    map<int,int> m;
+    for(int i=0;i<in.size();i++)[
+        map[in[i]]=i;
+    ]
+    BinaryNode* root=Tree(pre,0,pre.size()-1,in,0,in.size()-1,m);
+    return root;
+}
+
+BinaryNode* Tree(vector<int>& pre,int preS,int preE,vector<int>& in,int inS,int inE,map<int,int> m){
+    if(inS > inE || preS>preE){
+        return NULL;
+    }
+    BinaryNode* root=new BinaryNode(pre[preS]);
+    int inroot=m[root->data];
+    int numleft=inroot-inS;
+    root->left=Tree(pre,preS+1,pre+numleft,in,inS,inroot-1,m);
+    root->right=Tree(pre,preS+numleft+1,preE,in,inroot+1,inE,m);
+    return root;
+}
