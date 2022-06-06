@@ -1,0 +1,26 @@
+//count node in complete binary tree
+
+int leftH(BinaryNode* root){
+    int H=0;
+    while(root){
+        H++;
+        root=root->left;
+    }
+    return H;
+}
+int rightH(BinaryNode* root){
+    int H=0;
+    while(root){
+        H++;
+        root=root->right;
+    }
+    return H;
+}
+
+int Count(BinaryNode* root){
+    if(!root) return 0;
+    int LH=leftH(root);
+    int RH=rightH(root);
+    if(LH == RH) return (1<<LH)-1;
+    return 1+Count(root->left)+Count(root->right);
+}
