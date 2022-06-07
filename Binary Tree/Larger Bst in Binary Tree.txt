@@ -1,0 +1,37 @@
+//Larger BST in Binary Tree
+class Pair{
+    
+    public:
+    int size;
+    int larger;
+    int smaller;
+    Pair(int size,int min,int max){
+        this->size=size;
+        this->larger=max;
+        this->smaller=min;
+        
+    }
+};
+
+Pair BstSize(Node* root){
+    if(!root){
+        return Pair(0,INT_MAX,INT_MIN);
+    }
+    Pair left=BstSize(root->left);
+    Pair right=BstSize(root->right);
+    if(left.larger < root->data && root->data < right.smaller){
+        return Pair(1+left.size+right.size,min(root->data,left.smaller),max(root->data,right.larger));
+    }
+    return Pair(max(left.size,right.size),INT_MIN,INT_MAX);
+}
+
+class Solution{
+    public:
+    /*You are required to complete this method */
+    // Return the size of the largest sub-tree which is also a BST
+    int largestBst(Node *root)
+    {
+        return BstSize(root).size;
+    	//Your code here
+    }
+};
