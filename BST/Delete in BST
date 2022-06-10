@@ -1,0 +1,46 @@
+TreeNode* deleteNode(TreeNode* root, int val) {
+        if(!root){
+            return NULL;
+        }
+        if(root->val==val){
+            return helper(root);
+        }
+        TreeNode* temp=root;
+        while(root != NULL){
+            if(root->val > val){
+                if(root->left !=NULL && root->left->val==val){
+                    root->left=helper(root->left);
+                }
+                else{
+                    root=root->left;
+                }
+            }
+            else{
+                if(root->right!=NULL && root->right->val==val){
+                    root->right=helper(root->right);
+                }
+                else{
+                    root=root->right;
+                }
+            }
+        }   
+        return temp;
+    }
+    TreeNode* helper(TreeNode* root){
+        if(root->left == NULL){
+            return root->right;
+        }
+        else if(root->right==NULL){
+            return root->left;
+        }
+        TreeNode* Rightchild=root->right;
+        TreeNode *last=finder(root->left);
+        last->right=Rightchild;
+        return root->left;
+    }
+    TreeNode* finder(TreeNode* root){
+        if(root->right == NULL){
+            return root;
+        }
+        return finder(root->right);
+    }
