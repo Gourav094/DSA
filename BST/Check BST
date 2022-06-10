@@ -1,0 +1,12 @@
+bool isValidBST(TreeNode* root) {
+        return Check(root,LONG_MIN,LONG_MAX);
+    }
+    bool Check(TreeNode* root,long min,long max){
+        if(!root){
+            return true;
+        }
+        if(root->val >= max || root->val <= min){ 
+            return false;
+        }
+        return Check(root->left,min,root->val) && Check(root->right,root->val,max);
+    }
