@@ -1,0 +1,44 @@
+/*Explanation:=>
+Firstly sort the array according to profit and then find maximum of deadline
+create an array of maximum deadline+1 and initialize with -1
+Now profit is in decesing order ,iterate over i=o to n and select ith and insert it in id's position 
+if already something is present in id's position then store it in id's-1 th position and maintain count and job profit varible and update .
+
+*/
+class Solution 
+{
+    public:
+    //Function to find the maximum profit and the number of jobs done.
+    bool static Compare(Job& a,Job& b){
+        return (a.profit > b.profit);
+    }
+    vector<int> JobScheduling(Job arr[], int n) 
+    { 
+        vector<int> ans;
+        sort(arr, arr + n , Compare);
+        int maxi=arr[0].dead;
+        for(int i=0;i<n;i++){
+            maxi=max(maxi,arr[i].dead);
+            
+        }
+        int s[maxi+1];
+        for(int i=0;i<=maxi;i++){
+            s[i]=-1;
+        }
+        int count=0,jobprofit=0;
+        for(int i=0;i<n;i++){
+            for(int j=arr[i].dead;j>0;j--){
+                if(s[j]== -1){
+                    s[j]=i;
+                    count++;
+                    jobprofit+=arr[i].profit;
+                    break;
+                }
+            }
+        }
+        ans.push_back(count);
+        ans.push_back(jobprofit);
+        // your code here
+        return ans;
+    } 
+};
