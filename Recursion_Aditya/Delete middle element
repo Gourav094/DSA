@@ -1,0 +1,18 @@
+void del(stack<int>& s,int k){
+      if(k==1){
+          s.pop();
+          return;
+      }
+      int temp=s.top();
+      s.pop();
+      del(s,k-1);
+      s.push(temp);
+
+  }
+void Delete(stack<int>& s){
+    if(s.size()==0){
+        return;
+    }
+    int k=(s.size()/2)+1;
+    return del(s,k);
+}
