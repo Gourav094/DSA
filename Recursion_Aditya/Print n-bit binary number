@@ -1,0 +1,22 @@
+/*Given a positive integer N, the task is to find all the N bit binary numbers having more than or equal 1’s than 0’s for any prefix of the number.*/
+void solve(string op,int n,int one,int zero,vector<string>& ans){
+      if(n==0){
+          ans.push_back(op);
+          return;
+      }
+      string op1=op;
+      op1.push_back('1');
+      solve(op1,n-1,one+1,zero,ans);
+      if(one>zero){
+          string op2=op;
+          op2.push_back('0');
+          solve(op2,n-1,one,zero+1,ans);
+      }
+  }
+vector<string> NBitBinary(int n)
+{
+    vector<string > ans;
+    solve("",n,0,0,ans);
+    return ans;
+    // Your code goes here
+}
