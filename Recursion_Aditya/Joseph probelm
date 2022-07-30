@@ -1,0 +1,32 @@
+//Find the safe position
+void solve(vector<int> v,int k,int index,int& ans){
+    if(v.size()==1){
+        ans=v[0];
+        return;
+    }
+    index=(index+k) % v.size();
+    v.erase(v.begin()+index);
+    solve(v,k,index,ans);
+}
+int safePos(int n, int k) {
+    // code here
+    vector<int> v;
+    for(int i=1;i<=n;i++){
+        v.push_back(i);
+
+    }
+    k=k-1;
+    int ans=0;
+    solve(v,k,0,ans);
+    return ans;
+}
+
+//second Way
+int safePos(int n, int k) {
+    // code here
+    if(n==1){
+        return 1;
+    }
+    return (safePos(n-1,k)+k-1)% n+1;
+
+}
