@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool solve(int index,int s,int sum,int n,int arr[],vector<int> v){
+    if(index==n){
+        if(s==sum){
+            for(auto i:v){
+                cout<<i<<" ";
+            }
+            cout<<endl;
+            return true;
+        }
+        else return false;
+    }
+    v.push_back(arr[index]);
+    s+=arr[index];
+    if(solve(index+1,s,sum,n,arr,v) ==true)return true;   
+    s-=arr[index];
+    v.pop_back();
+    if(solve(index+1,s,sum,n,arr,v) ==true)return true;   
+
+    return false;
+}
+
+int main()
+{
+    int n=3;
+    int sum=2;
+    int arr[]={1,2,1};
+    
+    vector<int> v;
+    solve(0,0,sum,n,arr,v);
+
+    return 0;
+}
