@@ -1,0 +1,19 @@
+// Bitonic array ==> monotonically increase then decrease in array
+
+same code as of the problem peak element
+
+OR
+
+int findMaxBitonic(vector<int> a,int low,int high){ 
+	while(low<=high){
+		int mid=(low+high)/2;
+
+		if(a[mid]>a[mid-1] && a[mid]>a[mid+1]) //the maximum
+			return a[mid];
+		if(a[mid]>a[mid-1] && a[mid]<a[mid+1]) //in increasing zone
+			low=mid+1;
+		if(a[mid]<a[mid-1] && a[mid+1]<a[mid]) //in decreasing zone
+			high=mid-1;
+	}
+	return a[a.size()-1];
+}
