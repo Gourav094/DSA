@@ -1,0 +1,39 @@
+/*
+FIND PEAK ELEMENT IN AN ARRAY:
+
+A peak element is an element that is greater than its neighbors.
+
+Given an input array nums, where nums[i] ≠ nums[i+1], find a peak element and return its index.
+
+The array may contain multiple peaks, in that case return the index to any one of the peaks is fine.
+
+You may imagine that nums[-1] = nums[n] = -∞.
+*/
+
+class Solution {
+public:
+    int solve(vector<int>& arr,int n){
+        int s=1,e=n-2;
+        if(n==1)return 0;
+
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(arr[mid]>arr[mid-1] && arr[mid]>arr[mid+1]){
+                return mid;
+            }
+            else if(arr[mid]<arr[mid-1]){
+                e=mid-1;
+            }
+            else s=mid+1;
+        }
+        if(arr[0]>arr[1])return 0;
+        else if(arr[n-1]>arr[n-2])return n-1;
+        return -1;
+    }
+    int findPeakElement(vector<int>& nums) {
+        return solve(nums,size(nums));
+    }
+};
+
+
+
