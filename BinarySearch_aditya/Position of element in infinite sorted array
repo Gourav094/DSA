@@ -1,0 +1,38 @@
+/* suppose you have a sorted array of infinite numbers, how would you search an element in the array?
+
+Since array is sorted, the first thing clicks into mind is binary search, but the problem here is that we don’t know size of array.
+If the array is infinite, that means we don’t have proper bounds to apply binary search. So in order to find position of key, first we find bounds and then apply binary search algorithm.
+
+Let low be pointing to 1st element and high pointing to 2nd element of array, Now compare key with high index element,
+-if it is greater than high index element then copy high index in low index and double the high index.
+-if it is smaller, then apply binary search on high and low indices found.
+*/
+#include <bits/stdc++.h>
+using namespace std;
+int BinarySearch(int arr[],int s,int e,int x){
+    while(s<=e){
+        int mid=s+(e-s)/2;
+        if(arr[mid]==x) 
+            return mid;
+        else if(arr[mid]> x){
+            e=mid-1;
+        }
+        else s=mid+1;
+    }
+}
+int solve(int arr[],int x){
+    int s=0,e=1;
+    while(arr[e] < x){
+        s=e;
+        e=e*2;
+    }
+    return BinarySearch(arr,s,e,x);
+}
+int main()
+{
+    int arr[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+    int ans=solve(arr,7);
+    if(ans == -1) cout<<"not found";
+    else cout<<ans;
+    return 0;
+}
