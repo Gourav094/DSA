@@ -1,0 +1,160 @@
+//recursive way ----
+
+int solve(string s,int i,int j,bool istrue){
+        if(i>j){
+            return 0;
+        }
+        if(i==j){
+            if(istrue==true){
+                return s[i]='T';
+            }
+            else return s[i]='F';
+        }
+        int ans =0;
+        for(int k=i+1;k<j;k+2){
+            int lt=solve(s,i,k-1,true);
+            int rf=solve(s,k+1,j,false);
+            int lf=solve(s,i,k-1,false);
+            int rt=solve(s,k+1,j,true);
+            if(s[k]=='&'){
+                if(istrue==true){
+                    ans=ans+lt*rt;
+                }else{
+                    ans=ans+lf*rt+lf*rf+lt*rf;
+                }
+            }
+            if(s[k]=='|'){
+                if(istrue==true){
+                    ans=ans+lt*rt+lf*rt+lt*rf;
+                }else{
+                    ans=ans+lf*rf;
+                }
+            }
+            if(s[k]=='^'){
+                if(istrue==true){
+                    ans=ans+lf*rt+lt*rf;
+                }else{
+                    ans=ans+lt*rt+lf*rf;
+                }
+            }
+        }
+        return ans;
+    }
+    int countWays(int N, string S){
+        // code here
+        return solve(S,0,S.length()-1,true);
+    }
+    
+    
+    //using map------but giving TLE:
+    unordered_map<string,int>mp;
+    int solve(string s,int i,int j,bool istrue){
+        if(i>j){
+            return 0;
+        }
+        if(i==j){
+            if(istrue==true){
+                return s[i]='T';
+            }
+            else return s[i]='F';
+        }
+        
+        string temp=to_string(i);
+        temp.push_back(' ');
+        temp.append(to_string(j));
+        temp.push_back(' ');
+        temp.append(to_string(istrue));
+        if(mp.find(temp)!=mp.end()){
+            return mp[temp];
+        }
+        int ans =0;
+        for(int k=i+1;k<j;k+2){
+            int lt=solve(s,i,k-1,true);
+            int rf=solve(s,k+1,j,false);
+            int lf=solve(s,i,k-1,false);
+            int rt=solve(s,k+1,j,true);
+            if(s[k]=='&'){
+                if(istrue==true){
+                    ans=ans+lt*rt;
+                }else{
+                    ans=ans+lf*rt+lf*rf+lt*rf;
+                }
+            }
+            if(s[k]=='|'){
+                if(istrue==true){
+                    ans=ans+lt*rt+lf*rt+lt*rf;
+                }else{
+                    ans=ans+lf*rf;
+                }
+            }
+            if(s[k]=='^'){
+                if(istrue==true){
+                    ans=ans+lf*rt+lt*rf;
+                }else{
+                    ans=ans+lt*rt+lf*rf;
+                }
+            }
+        }
+        return mp[temp]=ans;
+    }
+    
+    
+    
+    //using 3d matrix---
+    int dp[205][205][2];
+    int solve(string str, int i, int j, int istrue)
+    {
+        if(i>j)return 0;
+        if(i==j)
+        {
+            if(istrue)return str[i]=='T';
+            else return str[i]=='F';
+        }
+        if(dp[i][j][istrue]!=-1)
+        return dp[i][j][istrue];
+        
+        int ans=0;
+        
+        for(int k=i+1;k<=j-1;k=k+2)
+        {
+            int leftT,leftF,rightT,rightF;
+            
+            if(dp[i][k-1][1]==-1)
+            leftT=solve(str,i,k-1,1);
+            else leftT=dp[i][k-1][1];
+            
+            if(dp[i][k-1][0]==-1)
+            leftF=solve(str,i,k-1,0);
+            else leftF=dp[i][k-1][0];
+            
+            if(dp[k+1][j][1]==-1)
+            rightT=solve(str,k+1,j,1);
+            else rightT=dp[k+1][j][1];
+            
+            if(dp[k+1][j][0]==-1)
+            rightF=solve(str,k+1,j,0);
+            else rightF=dp[k+1][j][0];
+            
+            if(str[k]=='^')
+            {
+                if(istrue)
+                ans+=(leftT*rightF) + (leftF*rightT);
+                else ans+=(leftT*rightT) + (leftF*rightF) ;
+            }
+            else if(str[k]=='&')
+            {
+                if(istrue)
+                ans+=(leftT*rightT);
+                else ans+=(leftT*rightF) + (leftF*rightT) + (leftF*rightF);
+            }
+            else if(str[k]=='|')
+            {
+                if(istrue)
+                ans+=(leftT*rightF) + (leftF*rightT) + (leftT*rightT);
+                else ans+=(leftF*rightF) ;
+            }
+            dp[i][j][istrue]=ans%1003;
+        }
+        return ans%1003;
+    }
+    
